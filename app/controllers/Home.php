@@ -25,7 +25,9 @@ class Home extends Base
 
         $cache = $this->container->get('cache');
 
-        $response = $cache->withLastModified($response, '-50 seconds');
+        $response = $cache->withEtag($response, md5(time()));
+        // $response = $cache->withExpires($response, '+50 seconds');
+        // $response = $cache->withLastModified($response, '-50 seconds');
 
         return $this->getTwig()->render($response, $this->setView('site/home'), [
             'title' => 'Home',
